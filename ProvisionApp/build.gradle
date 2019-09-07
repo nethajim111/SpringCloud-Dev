@@ -1,0 +1,50 @@
+apply plugin: 'java'
+apply plugin: 'maven'
+
+group = 'ProvisioningApplication'
+version = '0.0.1-SNAPSHOT'
+
+description = """ProvisioningApplication"""
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+tasks.withType(JavaCompile) { options.encoding = 'UTF-8' }
+
+repositories {
+	jcenter{ url "http://infynexus/nexus/repository/PUBLIC_REPO/" }
+	maven{ url "http://infynexus/nexus/repository/PUBLIC_REPO/" }
+}
+
+
+
+/*repositories {
+ //maven { url "http://central" }
+ mavenCentral()
+ }*/
+dependencies {
+	// https://mvnrepository.com/artifact/org.apache.commons/commons-lang3
+	compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.8.1'
+	// compile group: 'SemanticHubMS', name: 'SemanticHubMS', version:'0.0.1-SNAPSHOT'
+	// https://mvnrepository.com/artifact/junit/junit
+	testCompile group: 'junit', name: 'junit', version: '4.11'
+	// https://mvnrepository.com/artifact/com.h2database/h2
+	testCompile group: 'com.h2database', name: 'h2', version: '1.4.197'
+	// https://mvnrepository.com/artifact/org.mockito/mockito-core
+	testCompile group: 'org.mockito', name: 'mockito-core', version: '2.23.0'
+	// https://mvnrepository.com/artifact/org.slf4j/slf4j-api
+	compile group: 'org.slf4j', name: 'slf4j-api', version: '1.7.25'
+	// https://mvnrepository.com/artifact/net.sf.ehcache/ehcache
+	compile group: 'net.sf.ehcache', name: 'ehcache', version: '2.10.6'
+	// https://mvnrepository.com/artifact/org.codehaus.groovy/groovy-all
+	compile group: 'org.codehaus.groovy', name: 'groovy-all', version: '2.5.3', ext: 'pom'
+	
+	compile group: 'org.springframework.boot', name: 'spring-boot-starter-web', version:'2.0.4.RELEASE'
+	compile group: 'javax.servlet.jsp.jstl', name: 'javax.servlet.jsp.jstl-api', version:'1.2.1'
+	compile group: 'taglibs', name: 'standard', version:'1.1.2'
+	testCompile group: 'junit', name: 'junit', version:'3.8.1'
+
+	compile files('/SemanticHubMS/build/libs/SemanticHubMS-0.0.1-SNAPSHOT.jar')
+
+	testCompile group: 'org.springframework.boot', name: 'spring-boot-starter-test', version:'2.0.4.RELEASE'
+	compileOnly group: 'org.apache.tomcat.embed', name: 'tomcat-embed-jasper', version:'8.5.32'
+}
