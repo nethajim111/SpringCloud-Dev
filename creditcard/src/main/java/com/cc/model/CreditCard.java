@@ -4,6 +4,9 @@ import java.time.LocalDate;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
@@ -11,10 +14,17 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 public class CreditCard {
 
 	@Id
+	@NotNull(message="Card Number Cannot be Null")
 	private Long cardNumber;
 	
+	@NotNull(message="Card Holder Name Cannot be Null")
+	@NotEmpty(message="Card Holder Name Cannot be Empty")
+	@NotBlank(message="Card Holder Name Cannot be Blank")
   	private String cardHolderName;
   	
+	@NotNull(message="CVV Cannot be Null")
+	@NotEmpty(message="CVV Cannot be Empty")
+	@NotBlank(message="CVV Cannot be blank")
   	private String cvv;
   	
   	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern="dd-MM-yyyy")
