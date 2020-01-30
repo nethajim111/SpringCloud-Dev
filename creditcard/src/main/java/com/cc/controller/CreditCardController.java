@@ -26,8 +26,7 @@ public class CreditCardController {
 	private CreditCardService creditCardService;
 	
 	@RequestMapping(value="/credit-card/{cardNumber}",method=RequestMethod.GET,produces="application/json")
-	public ResponseEntity<?> getCreditCardDetails(@PathVariable("cardNumber") Long cardNumber) throws InterruptedException{
-		Thread.sleep(1500);
+	public ResponseEntity<?> getCreditCardDetails(@PathVariable("cardNumber") Long cardNumber) {
 		return new ResponseEntity<>(creditCardService.getCreditCardDetails(cardNumber),HttpStatus.OK);
 	}
 	
@@ -39,12 +38,12 @@ public class CreditCardController {
 	}
 	
 	@RequestMapping(value="/credit-card",method=RequestMethod.PUT,produces="application/json",consumes="application/json")
-	public ResponseEntity<?> UpdateCreditCardDetails(@RequestBody CreditCard creditCard){
+	public ResponseEntity<?> updateCreditCardDetails(@RequestBody CreditCard creditCard){
 		return new ResponseEntity<>(creditCardService.updateCreditCardDetails(creditCard),HttpStatus.OK);
 	}
 	
 	@RequestMapping(value="/credit-card/{cardNumber}",method=RequestMethod.DELETE,produces="application/json")
-	public ResponseEntity<?> DeleteCreditCardDetails(@PathVariable("cardNumber") Long cardNumber){
+	public ResponseEntity<?> deleteCreditCardDetails(@PathVariable("cardNumber") Long cardNumber){
 		creditCardService.deleteCreditCardDetails(cardNumber);
 		return new ResponseEntity<>("CreditCard Details Deleted Successfully",HttpStatus.OK);
 	}
