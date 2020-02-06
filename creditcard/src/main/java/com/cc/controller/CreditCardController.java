@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.cc.model.CreditCard;
 import com.cc.services.CreditCardService;
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixProperty;
 
 /**
  * Rest Controller for Credit Card Endpoints
@@ -26,7 +28,8 @@ public class CreditCardController {
 	private CreditCardService creditCardService;
 	
 	@RequestMapping(value="/credit-card/{cardNumber}",method=RequestMethod.GET,produces="application/json")
-	public ResponseEntity<?> getCreditCardDetails(@PathVariable("cardNumber") Long cardNumber) {
+	@HystrixCommand(fallbackMethod="getCreditCardDetailsFallback",commandProperties = {@HystrixProperty(name="execution.isolation.thread.timeoutInMilliseconds",value="3000")})
+	public ResponseEntity<?> getCreditCardDetails(@PathVariable("cardNumber") Long cardNumber) throws InterruptedException {
 		return new ResponseEntity<>(creditCardService.getCreditCardDetails(cardNumber),HttpStatus.OK);
 	}
 	
@@ -46,6 +49,10 @@ public class CreditCardController {
 	public ResponseEntity<?> deleteCreditCardDetails(@PathVariable("cardNumber") Long cardNumber){
 		creditCardService.deleteCreditCardDetails(cardNumber);
 		return new ResponseEntity<>("CreditCard Details Deleted Successfully",HttpStatus.OK);
+	}
+	
+	public ResponseEntity<?> getCreditCardDetailsFallback(Long cardNumber){
+		return new ResponseEntity<>("Service is down...please visit after sometime",HttpStatus.SERVICE_UNAVAILABLE);
 	}
 	
 }

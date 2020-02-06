@@ -53,7 +53,7 @@ public void addCreditCardDetailsTest() {
 }
 
 @Test
-public void getCreditCardDetails() {
+public void getCreditCardDetails() throws InterruptedException {
 	when(creditCardService.getCreditCardDetails(123456L)).thenReturn(Optional.of(creditCard));
 	ResponseEntity<?> actual=creditCardController.getCreditCardDetails(123456L);
 	assertNotNull(actual);
