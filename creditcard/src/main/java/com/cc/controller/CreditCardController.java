@@ -5,6 +5,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -40,6 +41,7 @@ public class CreditCardController {
 	            @ApiResponse(code = 403, message = "Accessing the resource you were trying to reach is forbidden"),
 	            @ApiResponse(code = 404, message = "The resource you were trying to reach is not found"),
 	            @ApiResponse(code=500, message="credit card not found against given credit card number")})
+	@PreAuthorize("#oauth2.hasScope('profile')")
 	@RequestMapping(value="/credit-card/{cardNumber}",method=RequestMethod.GET,produces="application/json")
 	@HystrixCommand(fallbackMethod="getCreditCardDetailsFallback",commandProperties = {@HystrixProperty(name="execution.isolation.thread.timeoutInMilliseconds",value="10000")},ignoreExceptions = {Exception.class})
 	public ResponseEntity<?> getCreditCardDetails(@PathVariable("cardNumber") Long cardNumber) throws InterruptedException {
